@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.shoppingmall.product.ProductMapper">
+    <insert id="insProduct" useGeneratedKeys="true" keyProperty="iproduct">
+        INSERT INTO t_product
+        SET price = #{price}
+        , ctnt = #{ctnt}
+        , nm = #{nm}
+        , main_pic = #{mainPic}
+        , brand = #{brand}
+    </insert>
+
+    <insert id="insProductPic">
+        insert into t_product_pic
+        (iproduct, pic)
+        values
+        <foreach collection="list" item="item" open="(" separator="), (" close=")">
+            #{item.iproduct},#{item.pic}
+    </foreach>
+    </insert>
+
+    <select id="selproduct" resultType="ProductVo">
+        select  iproduct,price,nm,main_pic,brand
+        from t_product
+    </select>
+
+    <select id="selProductById">
+        SELECT iproduct, price, nm, main_pic mainPic, brand, ctnt
+        FROM t_product
+        WHERE iproduct = #{iproduct}
+    </select>
+    <select id="selProductPics">
+        select pic
+        from t_product_pic
+        where iproduct = #{iproduct}
+     </select>
+
+
+
+
+</mapper>
